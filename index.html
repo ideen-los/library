@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <dialog id="add-book-dialog">
+      <h2>Add a Book</h1>
+      <form id="add-book-form" method="post">
+        <label for="title"
+          >Title
+          <input id="title" type="text" />
+        </label>
+        <label for="author"
+          >Author
+          <input id="author" type="text" />
+        </label>
+        <label for="pages"
+          >Pages
+          <input id="pages" type="text" />
+        </label>
+        <label for="title"
+          >Read
+          <select id="read" name="read" />
+            <option value="" selected disabled hidden>Did you read it?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </label>
+        <input id="add-book-button" type="submit" value="Add the Book now">
+      </form>
+    </dialog>
+    <button class="btn show-btn">Add a Book</button>
     <div id="container"></div>
     <script src="js/library.js"></script>
   </body>

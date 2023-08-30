@@ -1,4 +1,4 @@
-/* DEFINE LIBRARY ARRAY & BOOK CONSTRUCTOR */
+/* CREATE LIBRARY ARRAY & BOOK CONSTRUCTOR */
 const myLibrary = [];
 
 function Book(title, author, pages, read) {
@@ -8,16 +8,15 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-/* DEFINE FUNCTION TO ADD A NEW BOOK TO THE LIBRARY */
-function addBookToLibrary(title, author, pages, read) {
-  myLibrary.push(new Book(title, author, pages, read));
-}
-
-/* DEFINE BOOK CONTRAINER & FUNCTION TO DISPLAY THE LIBRARY */
+/* CREATE BOOK CONTAINER */
 const container = document.querySelector("#container");
 
+/* CREATE FUNCTION TO DISPLAY THE LIBRARY */
 const displayLibrary = function () {
+  container.innerHTML = "";
+
   for (book of myLibrary) {
+    /* create card and book infos */
     let bookCard = document.createElement("div");
     bookCard.classList.add("card");
 
@@ -41,41 +40,91 @@ const displayLibrary = function () {
     bookCardRead.textContent = book.read;
     bookCard.appendChild(bookCardRead);
 
+    let bookCardDelete = document.createElement("button");
+    bookCardDelete.classList.add("btn");
+    /* get the position of the book inside the array via its index property and add it as data-book-id attribute to the button */
+    bookCardDelete.setAttribute("data-book-id", book.index);
+    bookCardDelete.textContent = "Delete Book";
+    bookCardDelete.addEventListener("click", deleteBook);
+    bookCard.appendChild(bookCardDelete);
+
+    /* add card with the book infos to the container div */
     container.appendChild(bookCard);
   }
 };
 
-/* ADD EVENTLISTENERS TO TRIGGER ADD-A-NEW-BOOK DIALOG & SUBMIT THE FORM */
-const addBookDialog = document.querySelector("#add-book-dialog");
+/* ADD EVENTLISTENERS TO TRIGGER & CLOSE THE MODAL */
+const modal = document.querySelector("#modal");
+const modalContent = document.querySelector(".modal-content");
 
-const showDialogButton = document.querySelector(".show-btn");
-showDialogButton.addEventListener("click", (e) => {
-  addBookDialog.showModal();
+const showModalButton = document.querySelector("#btn-show");
+const closeModalButton = document.querySelector("#btn-close");
+
+showModalButton.addEventListener("click", (e) => {
+  modal.style.display = "flex";
 });
 
+closeModalButton.addEventListener("click", (e) => {
+  modal.style.display = "none";
+  e.preventDefault();
+});
+
+/* CREATE FUNCTION TO CLOSE THE MODAL WHEN CLICKING ANYWHERE BUT THE MODAL CONTENT */
+window.addEventListener("click", (e) => {
+  if (e.target == modal) {
+    modal.style.display = "none";
+  }
+});
+
+/* ADD EVENTLISTENERS TO SUBMIT THE FORM */
 const addBookForm = document.querySelector("#add-book-form");
 addBookForm.addEventListener("submit", submitForm);
 
-/* GET VALUE OF FORM INPUTS AND CALL ADD-A-NEW-BOOK FUNCTION ON SUBMIT */
+/* CREATE FUNCTION TO GET THE VALUES OF THE FORM INPUTS AND CREATE A NEW BOOK OBJECT WITH THOSE VALUES ON SUBMIT */
 function submitForm(e) {
   let addBookTitle = document.querySelector("#title");
   let addBookAuthor = document.querySelector("#author");
   let addBookPages = document.querySelector("#pages");
   let addBookRead = document.querySelector("#read");
 
-  addBookToLibrary(
-    addBookTitle.value,
-    addBookAuthor.value,
-    addBookPages.value,
-    addBookRead.value
+  /* create new book and push to myLibrary array & save its position (index) in the variable indexOfBookInArray */
+  let indexOfBookInArray = myLibrary.push(
+    new Book(
+      addBookTitle.value,
+      addBookAuthor.value,
+      addBookPages.value,
+      addBookRead.value
+    )
   );
 
-  container.innerHTML = "";
+  /* create a property with the value of indexOfBookInArray that we just saved */
+  myLibrary[indexOfBookInArray - 1].index = indexOfBookInArray - 1;
+
   displayLibrary();
   e.preventDefault();
+
+  /* clean up the form */
   addBookTitle.value = "";
   addBookAuthor.value = "";
   addBookPages.value = "";
   addBookRead.value = "";
-  addBookDialog.close();
+
+  /* close modal */
+  modal.style.display = "none";
+}
+
+/* CREATE DELETE-BOOK FUNCTION */
+function deleteBook(e) {
+  /* get the data-book-id value of the element */
+  let indexOfBookInArray = e.target.dataset.bookId;
+
+  /* remove the index that euqals the data-book-id from the array */
+  myLibrary.splice(indexOfBookInArray, 1);
+
+  /* update the index value of all books to represent their new position inside the array */
+  for (i = indexOfBookInArray; i < myLibrary.length; i++) {
+    myLibrary[i].index -= 1;
+  }
+
+  displayLibrary();
 }

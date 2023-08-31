@@ -14,9 +14,22 @@ body {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  gap: 20px;
+  gap: 60px;
   background-color: #222;
   font-family: sans-serif;
+}
+
+#library-title {
+  color: antiquewhite;
+  font-size: 44px;
+}
+
+#library-title span {
+  padding: 14px;
+  background-color: #9370db;
+  border-radius: 50%;
+  font-size: 36px;
+  margin-left: 5px;
 }
 
 #container {
@@ -32,9 +45,11 @@ body {
   flex-direction: column;
   gap: 5px;
   padding: 20px;
-  background-color: #444;
+  background-color: #3f3e46;
   border-radius: 8px;
   color: #d0d0d0;
+  box-shadow: rgba(30, 28, 30, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
 .card .title {
@@ -49,14 +64,15 @@ body {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1;
 }
 
 .modal-content {
   align-self: flex-start;
-  padding: 40px 30px;
+  padding: 40px 40px;
   border-radius: 5px;
-  width: 400px;
+  width: 450px;
   background-color: #eee;
 }
 
@@ -83,7 +99,7 @@ input,
 select {
   display: block;
   width: 100%;
-  background-color: #dadada;
+  background-color: #d6d6d6;
   border: 0;
   margin-top: 1px;
   padding: 15px;
@@ -107,9 +123,10 @@ select {
   max-width: 400px;
   margin-top: 20px;
   cursor: pointer;
-  background-color: #c400e0;
+  background-color: mediumpurple;
   border: 0;
   font-weight: bold;
+  text-align: center;
   border-radius: 5px;
 }
 
@@ -124,13 +141,64 @@ select {
   margin: 10 0px 0 40px;
 }
 
+.btn-delete {
+  background-color: #4c4b51;
+  margin-top: 7px;
+}
+
 .btn:focus-visible {
   outline: 0;
 }
 
 .btn:hover,
 #btn-close:hover {
+  background-color: #222;
+  color: #fdfaf6;
+  border-color: #222;
+}
+
+#btn-show:hover {
   background-color: #111;
-  color: #eee;
-  border-color: #111;
+}
+
+#btn-close:hover {
+  background-color: #dadada;
+  border-color: #dadada;
+  color: #333;
+}
+
+.btn-delete:hover {
+  background-color: crimson;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* display: inline-block; */
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.switch .btn {
+  background-color: #4c4b51;
+}
+
+.switch input:hover + .btn {
+  background-color: #222;
+}
+
+.switch input:checked + .btn {
+  background-color: #82b594;
 }

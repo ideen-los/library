@@ -35,13 +35,26 @@ const displayLibrary = function () {
     bookCardPages.textContent = book.pages;
     bookCard.appendChild(bookCardPages);
 
-    let bookCardRead = document.createElement("div");
-    bookCardRead.classList.add("read");
-    bookCardRead.textContent = book.read;
+    let bookCardRead = document.createElement("label");
+    bookCardRead.classList.add("switch");
+    bookCardRead.setAttribute("data-book-id", book.index);
+    bookCardRead.addEventListener("click", bookReadToggle);
+    let bookCardRead_input = document.createElement("input");
+    bookCardRead_input.type = "checkbox";
+    let bookCardRead_span = document.createElement("span");
+    bookCardRead_span.textContent = "Mark as Read";
+    bookCardRead_span.classList.add("btn");
+    bookCardRead.appendChild(bookCardRead_input);
+    bookCardRead.appendChild(bookCardRead_span);
     bookCard.appendChild(bookCardRead);
+
+    if (book.read === "Yes") {
+      bookCardRead_input.checked = true;
+    }
 
     let bookCardDelete = document.createElement("button");
     bookCardDelete.classList.add("btn");
+    bookCardDelete.classList.add("btn-delete");
     /* get the position of the book inside the array via its index property and add it as data-book-id attribute to the button */
     bookCardDelete.setAttribute("data-book-id", book.index);
     bookCardDelete.textContent = "Delete Book";
@@ -111,6 +124,30 @@ function submitForm(e) {
 
   /* close modal */
   modal.style.display = "none";
+}
+
+/* CREATE Read TOGGLE FUNCTION */
+function bookReadToggle(e) {
+  /* prevent synthetic click on the input by browser to prevent event bubbling up a second time to the currentTarget */
+  e.preventDefault();
+  const checkbox = e.currentTarget.querySelector('input[type="checkbox"]');
+
+  /* if checkbox is checked uncheck it and vice versa */
+  checkbox.checked = !checkbox.checked;
+
+  /* get index of the element that has been clicked on */
+  let indexOfBookInArray = e.currentTarget.dataset.bookId;
+
+  if (myLibrary[indexOfBookInArray].read === "Yes") {
+    myLibrary[indexOfBookInArray].read = "No";
+  } else if (
+    myLibrary[indexOfBookInArray].read === "No" ||
+    myLibrary[indexOfBookInArray].read === ""
+  ) {
+    myLibrary[indexOfBookInArray].read = "Yes";
+  }
+
+  displayLibrary();
 }
 
 /* CREATE DELETE-BOOK FUNCTION */

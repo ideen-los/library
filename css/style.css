@@ -4,24 +4,25 @@
 
 html,
 body {
-  margin: 0;
+  min-height: 100%;
   padding: 0;
+  margin: 0;
 }
 
 body {
   display: flex;
-  height: 100vh;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   gap: 60px;
+  padding: 0 15px 50px;
   background-color: #222;
   font-family: sans-serif;
 }
 
 #library-title {
   color: antiquewhite;
-  font-size: 44px;
+  font-size: 42px;
 }
 
 #library-title span {
@@ -33,10 +34,22 @@ body {
 }
 
 #container {
-  width: 900px;
+  max-width: 900px;
+  min-width: 320px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+@media screen and (max-width: 930px) {
+  #container {
+    max-width: 673px;
+  }
+}
+@media screen and (max-width: 720px) {
+  #container {
+    max-width: 445px;
+  }
 }
 
 .card {
@@ -45,11 +58,20 @@ body {
   flex-direction: column;
   gap: 5px;
   padding: 20px;
+
   background-color: #3f3e46;
   border-radius: 8px;
   color: #d0d0d0;
-  box-shadow: rgba(30, 28, 30, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(30, 28, 30, 0.5) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.6) 0px 30px 60px -30px;
+}
+
+@media screen and (max-width: 530px) {
+  .card {
+    width: calc(50% - 5px);
+    padding: 15px 10px;
+    font-size: 14px;
+  }
 }
 
 .card .title {
@@ -57,10 +79,17 @@ body {
   text-transform: uppercase;
 }
 
+.card.read {
+  background-color: #2a2a2e;
+  color: #5c5b5b;
+  box-shadow: rgba(30, 28, 30, 0.2) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
 #modal {
   display: none;
   justify-content: center;
-  padding-top: 200px;
+  align-items: center;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -69,8 +98,8 @@ body {
 }
 
 .modal-content {
-  align-self: flex-start;
   padding: 40px 40px;
+  margin: 15px;
   border-radius: 5px;
   width: 450px;
   background-color: #eee;
@@ -130,6 +159,17 @@ select {
   border-radius: 5px;
 }
 
+@media screen and (max-width: 530px) {
+  .btn {
+    padding: 16px 5px;
+    font-size: 13px;
+  }
+}
+
+.card.read .btn {
+  background-color: #3b3a3f;
+}
+
 #btn-close {
   background-color: transparent;
   border: 3px solid #dadada;
@@ -142,8 +182,12 @@ select {
 }
 
 .btn-delete {
-  background-color: #4c4b51;
+  background-color: #5f5e64;
   margin-top: 7px;
+}
+
+.card.read .btn-delete {
+  color: #b0afaf;
 }
 
 .btn:focus-visible {
@@ -167,23 +211,23 @@ select {
   color: #333;
 }
 
-.btn-delete:hover {
+.btn-delete:hover,
+.card.read .btn-delete:hover {
   background-color: crimson;
+  color: #fdfaf6;
 }
 
-/* The switch - the box around the slider */
-.switch {
+.read-button {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  /* display: inline-block; */
   width: 100%;
   margin-top: auto;
 }
 
 /* Hide default HTML checkbox */
-.switch input {
+.read-button input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -191,14 +235,15 @@ select {
   margin: 0;
 }
 
-.switch .btn {
-  background-color: #4c4b51;
+.read-button .btn {
+  background-color: #5f5e64;
 }
 
-.switch input:hover + .btn {
-  background-color: #222;
+.read-button input:hover + .btn {
+  background-color: #57a172;
 }
 
-.switch input:checked + .btn {
-  background-color: #82b594;
+.read-button input:checked + .btn {
+  background-color: #34534d;
+  color: #b0afaf;
 }

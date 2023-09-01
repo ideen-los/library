@@ -36,7 +36,7 @@ const displayLibrary = function () {
     bookCard.appendChild(bookCardPages);
 
     let bookCardRead = document.createElement("label");
-    bookCardRead.classList.add("switch");
+    bookCardRead.classList.add("read-button");
     bookCardRead.setAttribute("data-book-id", book.index);
     bookCardRead.addEventListener("click", bookReadToggle);
     let bookCardRead_input = document.createElement("input");
@@ -50,6 +50,8 @@ const displayLibrary = function () {
 
     if (book.read === "Yes") {
       bookCardRead_input.checked = true;
+      bookCard.classList.add("read");
+      bookCardRead_span.textContent = "Read";
     }
 
     let bookCardDelete = document.createElement("button");
@@ -126,7 +128,7 @@ function submitForm(e) {
   modal.style.display = "none";
 }
 
-/* CREATE Read TOGGLE FUNCTION */
+/* CREATE READ TOGGLE FUNCTION */
 function bookReadToggle(e) {
   /* prevent synthetic click on the input by browser to prevent event bubbling up a second time to the currentTarget */
   e.preventDefault();
